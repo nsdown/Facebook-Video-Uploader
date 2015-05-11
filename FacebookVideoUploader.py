@@ -7,7 +7,6 @@
 #http://terminal.jcubic.pl/
 
 
-
 print "Content-type: application/json\n\n"
 import requests
 import feedparser
@@ -20,7 +19,7 @@ response_array = []
 
 # -- For each item in the feed
 for index, post in enumerate(d.entries):
-    if index >= 20:
+    if index >= 12:
         break
     #Here we set up a dictionary in order to extract selected data from the original brightcove "post" result
     item = {}
@@ -66,10 +65,12 @@ item['url'] = vid_url
 
 if not videoExists(videoUrl):
     print "Haven't seen", videoUrl, "before, adding it to Facebook!"
+    
         
         #Make our POST request to Facebook Graph API:
         access = '[Insert Your Permanent Page Access Token here]'
-        fburl = 'https://graph-video.facebook.com/v2.3/[Insert your Pgae ID here]/videos?access_token='+str(access)
+        #SMGV Video Dev
+        fburl = 'https://graph-video.facebook.com/v2.3/[Insert Facebook Page ID here]/videos?access_token='+str(access)
         payload = {'name': '%s' %(videoName), 'description': '%s' %(videoDescription), 'file_url': '%s' %(videoUrl)}
         flag = requests.post(fburl, data=payload).text
         print flag
